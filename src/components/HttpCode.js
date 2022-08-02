@@ -1,21 +1,29 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import Data from "../data/data.json";
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 function Http_code() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const showActiveHttpCode = searchParams.get('filter') === 'active'; 
+  const { http_code } = useParams();
+  
+  const excuse = Data.find(object => {
+    return object.http_code == http_code;
+  });
 
-  useEffect(() => {
-    
-  }, [searchParams]);
 
   return (
     <div>
-       
+       { excuse ? (
+        <div>
+          <h2>{excuse.message}</h2>
+        </div>
+       ) : (
+         <h2>Try another number (between 701 and 799)</h2>
+       )
+
+       }
     </div>
-  )
+  );
 }
 
 export default Http_code;
